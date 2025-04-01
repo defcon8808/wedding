@@ -7,7 +7,7 @@
 
     <div class="address-main-font">
       <p class="big_02">오시는 길</p>
-      <span class="big_02">서울특별시 용산구 용산동 1가 8번지 <br/>로얄파크컨벤션 1층</span>
+      <span class="big_02">서울특별시 마포구 성암로 189 <br/>DMC타워웨딩 4층 펠리체홀</span>
     </div>
 
     <div class="address-map">
@@ -65,7 +65,7 @@ export default {
     startNavigation(param) {
       const lat = this.latitude;  // 목적지 위도
       const lng = this.longitude; // 목적지 경도
-      const name = '서울특별시 용산구 용산동 1가 8번지'    // 목적지 이름 (옵션)
+      const name = '서울특별시 마포구 성암로 189 DMC타워웨딩 4층'    // 목적지 이름 (옵션)
 
       if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
 
@@ -110,7 +110,7 @@ export default {
           // 주소-좌표 변환 객체를 생성합니다
           var geocoder = new kakao.maps.services.Geocoder();
 
-          const param = '서울특별시 용산구 용산동 1가 8번지'
+          const param = '서울특별시 마포구 성암로 189'
 
           // 주소로 좌표를 검색합니다
           geocoder.addressSearch(param, function(result, status) {

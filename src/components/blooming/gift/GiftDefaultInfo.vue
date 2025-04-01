@@ -9,27 +9,23 @@
       <div class="font-wrap text_02">
         <h3>신부측</h3>
         <p>
-          신부 : 0111-212312213-21 (신한은행)
-          <i class="fas fa-copy copy-icon" @pointerdown="copyToClipboard('0111-212312213-21')"></i>
+          신부 정혜지 : 0111-212312213-21 (신한은행)
+          <i class="fas" @pointerdown="copyToClipboard('0111-212312213-21')">복사하기</i>
         </p>
         <p>
-          신부 어머니 : 0111-212312213-22 (신한은행)
-          <i class="fas fa-copy copy-icon" @pointerdown="copyToClipboard('0111-212312213-22')"></i>
+          신부 아버지 : 0111-212312213-22 (신한은행)
+          <i class="fas" @pointerdown="copyToClipboard('0111-212312213-22')">복사하기</i>
         </p>
       </div>
       <div class="font-wrap text_02" >
         <h3>신랑측</h3>
         <p>
-          신랑 : 0111-212312213-21 (카카오뱅크)
-          <i class="fas fa-copy copy-icon" @pointerdown="copyToClipboard('0111-212312213-21')"></i>
-        </p>
-        <p>
-          신랑 어머니 : 0111-212312213-22 (카카오뱅크)
-          <i class="fas fa-copy copy-icon" @pointerdown="copyToClipboard('0111-212312213-22')"></i>
+          신랑 박주안 : 0111-212312213-21 (카카오뱅크)
+          <i class="fas" @pointerdown="copyToClipboard('0111-212312213-21')">복사하기</i>
         </p>
         <p>
           신랑 아버지 : 0111-212312213-23 (카카오뱅크)
-          <i class="fas fa-copy copy-icon" @pointerdown="copyToClipboard('0111-212312213-23')"></i>
+          <i class="fas" @pointerdown="copyToClipboard('0111-212312213-23')">복사하기</i>
         </p>
       </div>
     </div>
@@ -45,18 +41,22 @@ export default {
   },
   methods: {
     callGroom() {
-      window.location.href = 'tel:01056961909';
+      window.location.href = 'tel:01072708801';
     },
     callBride() {
-      window.location.href = 'tel:01056961909';
+      window.location.href = 'tel:01098785934';
     },
     toggleGiftInfo() {
       this.showGiftInfo = !this.showGiftInfo;
     },
     copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('계좌번호가 복사되었습니다!');
-      });
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      alert("복사되었습니다.")
     }
   }
 };
@@ -155,8 +155,9 @@ export default {
 .gift-info-wrap .copy-icon {
   cursor: pointer;
   color: #4A90E2;
-  font-size: 1.1rem;
   margin-left: 8px;
+  transition: color 0.3s;
+  
 }
 
 .gift-info-wrap .copy-icon:hover {

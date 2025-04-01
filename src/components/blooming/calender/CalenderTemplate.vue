@@ -2,7 +2,7 @@
   <div class="calendar-wrap-sub">
     <!-- 상단 카운트다운 + 날짜 -->
     <div class="calendar-header">
-      <div class="wedding-date big_02">25년 11월 21일 금요일 <br/>오후 2시 00분</div>
+      <div class="wedding-date big_02">25년 06월 28일 토요일 <br/>오후 3시 00분</div>
       <p class="big_02">{{countdown}}</p>
     </div>
 

@@ -6,15 +6,15 @@
 
     <div class="content-description">
       <div class="description-header big_01">
-        <h2>충디딥</h2>
+        <h2>박주안</h2>
         <p>·</p>
-        <h2>유디딥</h2>
+        <h2>정혜지</h2>
       </div>
       <div class="description-info text_02">
         <span class="location">
-          2025년 11월 21일 토요일 오후 2시 00분
+          2025년 06월 28일 토요일 오후 3시 00분
         </span>
-        <p class="animated-underline">서울 로얄파크컨벤션 1층 일반 홀</p>
+        <p class="animated-underline">DMC타워웨딩 4층 펠리체홀</p>
       </div>
     </div>
   </div>

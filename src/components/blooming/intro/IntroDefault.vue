@@ -35,14 +35,14 @@
 
     <div class="content-fmInfo text_03">
       <div class="fmInfo">
-        <p>김두환 · 홍길동</p>
-        <span>의 외동</span>
-        <p>충디딥</p>
+        <p>박태경 · 김용복</p>
+        <span>의 장남</span>
+        <p>박주안</p>
       </div>
       <div class="fmInfo">
-        <p>김두환 · 홍길동</p>
-        <span>의 삼녀</span>
-        <p>유디딥</p>
+        <p>정형식 · 김미성</p>
+        <span>의 장녀</span>
+        <p>정혜지</p>
       </div>
     </div>
   </div>
