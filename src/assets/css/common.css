@@ -1,3 +1,11 @@
+@media (prefers-color-scheme: dark) {
+    html,
+    body {
+      background: #fff !important;
+      background-color: #fff !important;
+    }
+}
+
 /* 텍스트 폰트패밀리 */
 @font-face {
     font-family: 'Love Ya Like A Sister';

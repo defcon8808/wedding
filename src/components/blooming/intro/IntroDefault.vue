@@ -1,48 +1,28 @@
 <template>
-  <div
-      class="intro-wrap"
-      :class="{ 'animate-visible': isVisible }"
-      ref="intro"
-  >
-
+  <div class="intro-wrap" :class="{ 'animate-visible': isVisible }" ref="intro">
     <!-- 타이틀 제목 -->
-    <div class="content-title">
-      저희 결혼합니다
-    </div>
-
+    <div class="content-title">저희 결혼합니다</div>
 
     <!-- 내용 -->
     <div class="content text_02">
-      <p>
-        사랑이 깊어 결실을
-      </p>
-      <p >
-        맺고 저희 두 사람이 새로운 여정을
-      </p>
-      <p style="padding-bottom: 24px">
-        함께 시작하려 합니다.
-      </p>
-      <p>
-        세상에서 가장 특별한 이 날,
-      </p>
-      <p>
-        소중한 당신을 기쁜 마음으로 초대합니다.
-      </p>
-      <p>
-        당신을 기다리겠습니다.
-      </p>
+      <p>사랑이 깊어 결실을</p>
+      <p>맺고 저희 두 사람이 새로운 여정을</p>
+      <p style="padding-bottom: 24px">함께 시작하려 합니다.</p>
+      <p>세상에서 가장 특별한 이 날,</p>
+      <p>소중한 당신을 기쁜 마음으로 초대합니다.</p>
+      <p>당신을 기다리겠습니다.</p>
     </div>
 
     <div class="content-fmInfo text_03">
       <div class="fmInfo">
         <p>박태경 · 김용복</p>
         <span>의 장남</span>
-        <p>박주안</p>
+        <p>주안</p>
       </div>
       <div class="fmInfo">
         <p>정형식 · 김미성</p>
         <span>의 장녀</span>
-        <p>정혜지</p>
+        <p>혜지</p>
       </div>
     </div>
   </div>
@@ -58,19 +38,18 @@ export default {
   },
   mounted() {
     const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            this.isVisible = true;
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.isVisible = true;
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
     );
     observer.observe(this.$refs.intro);
   },
 
-  methods: {
-  },
+  methods: {},
 };
 </script>
 <style scoped>
@@ -87,26 +66,26 @@ export default {
     font-weight: 700;
     font-size: 24px;
     text-align: center;
-    padding: 1rem 0 26px ;
+    padding: 1rem 0 26px;
   }
 
   .content {
     padding: 24px 24px 0;
   }
 
-  .content p{
+  .content p {
     white-space: nowrap;
     text-align: center;
     margin-bottom: 6px;
   }
 
-  .content-fmInfo{
+  .content-fmInfo {
     margin: 2.5rem 2rem 2rem;
     padding: 1.2rem 1rem;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 
-    .fmInfo{
+    .fmInfo {
       display: flex;
       justify-content: center;
       gap: 0.5rem;

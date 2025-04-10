@@ -2,25 +2,33 @@
   <div class="calendar-wrap-sub">
     <!-- 상단 카운트다운 + 날짜 -->
     <div class="calendar-header">
-      <div class="wedding-date big_02">25년 06월 28일 토요일 <br/>오후 3시 00분</div>
-      <p class="big_02">{{countdown}}</p>
+      <div class="wedding-date big_02">
+        25년 06월 28일 토요일 <br />오후 3시 00분
+      </div>
+      <p class="big_02">{{ countdown }}</p>
     </div>
 
     <!-- 요일 및 달력 -->
     <div class="calendar-grid">
-      <div v-for="day in daysOfWeek" :key="day" class="calendar-day header"
-           :style="day === '일' ? 'color:red;!important' : 'color:#555555'">
+      <div
+        v-for="day in daysOfWeek"
+        :key="day"
+        class="calendar-day header"
+        :style="day === '일' ? 'color:red;!important' : 'color:#555555'"
+      >
         {{ day }}
       </div>
 
       <div
-          v-for="(date, index) in calendarDays"
-          :key="index"
-          class="calendar-day"
-          style="color:#555555"
-          :class="{ 'current-date': isSelectedDate(date) }"
+        v-for="(date, index) in calendarDays"
+        :key="index"
+        class="calendar-day"
+        style="color: #555555"
+        :class="{ 'current-date': isSelectedDate(date) }"
       >
-        <span v-if="date" :style="isSelectedDate(date) ? 'color:#fff':''">{{ date }}</span>
+        <span v-if="date" :style="isSelectedDate(date) ? 'color:#fff' : ''">{{
+          date
+        }}</span>
       </div>
     </div>
   </div>
@@ -29,14 +37,17 @@
 <script>
 export default {
   name: "calenderTemplate",
-  props:{
-    days:{
+  props: {
+    days: {
       type: String,
       default: () => {
         const today = new Date();
-        return `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, "0")}.${String(today.getDate()).padStart(2, "0")}`;
+        return `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(
+          2,
+          "0"
+        )}.${String(today.getDate()).padStart(2, "0")}`;
       },
-    }
+    },
   },
   data() {
     return {
@@ -44,8 +55,7 @@ export default {
       currentYear: null,
       currentMonth: null,
       selectedDate: null,
-      targetDate: new Date('2025-01-04T00:00:00'), // 목표 날짜 (타임존에 맞춰 설정)
-      countdown: '',
+      countdown: "",
     };
   },
   created() {
@@ -58,8 +68,16 @@ export default {
   },
   computed: {
     calendarDays() {
-      const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay(); // 해당 달 1일의 요일
-      const lastDate = new Date(this.currentYear, this.currentMonth + 1, 0).getDate(); // 해당 달 마지막 날짜
+      const firstDay = new Date(
+        this.currentYear,
+        this.currentMonth,
+        1
+      ).getDay(); // 해당 달 1일의 요일
+      const lastDate = new Date(
+        this.currentYear,
+        this.currentMonth + 1,
+        0
+      ).getDate(); // 해당 달 마지막 날짜
       const days = [];
 
       // 첫 주 빈칸 채우기
@@ -85,29 +103,27 @@ export default {
   methods: {
     updateCountdown() {
       const now = new Date();
-      const tmp = this.days.replaceAll('.','-') + 'T00:00:00'
-      const diff = new Date(tmp) - now;
+      // 시간을 제거해서 날짜만 비교
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const tmp = this.days.replaceAll(".", "-") + "T00:00:00";
+      const diff = new Date(tmp) - today;
 
       if (diff <= 0) {
-        this.countdown = '우리의 결혼생활이 시작됐습니다!';
+        this.countdown = "우리의 결혼생활이 시작됐습니다!";
         return;
       }
-
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      // this.countdown = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초 남음`;
-      this.countdown = `결혼식이 ${days}일 남았습니다`;    },
+      this.countdown = `결혼식이 ${days}일 남았습니다`;
+    },
     isSelectedDate(date) {
       if (!date) return false;
 
       const [year, month, day] = this.days.split(".").map(Number);
       return (
-          this.currentYear === year &&
-          this.currentMonth === month - 1 &&
-          date === day
+        this.currentYear === year &&
+        this.currentMonth === month - 1 &&
+        date === day
       );
     },
   },
@@ -159,5 +175,4 @@ export default {
   align-items: center;
   justify-content: center;
 }
-
 </style>

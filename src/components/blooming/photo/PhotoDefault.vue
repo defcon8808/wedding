@@ -3,21 +3,42 @@
     <div class="swiper-container" ref="swiperContainer">
       <div class="swiper-wrapper">
         <div
-            v-for="(image, index) in imagePath"
-            :key="index"
-            class="swiper-slide"
+          v-for="(image, index) in imagePath"
+          :key="index"
+          class="swiper-slide"
         >
           <img :src="image" class="image-item" />
         </div>
       </div>
 
       <div class="scroll-instruction big_02">
-        <svg class="scroll-arrow" width="24" height="24" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="scroll-arrow"
+          width="24"
+          height="24"
+          viewBox="0 0 50 50"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <!-- 원 -->
-          <circle cx="25" cy="25" r="24" stroke="black" stroke-width="2" fill="none"/>
+          <circle
+            cx="25"
+            cy="25"
+            r="24"
+            stroke="black"
+            stroke-width="2"
+            fill="none"
+          />
           <!-- 오른쪽 화살표 -->
-          <g transform="translate(12, 15)"> <!-- 화살표를 원의 중앙으로 이동 -->
-            <path d="M10 0L20 10L10 20" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <g transform="translate(12, 15)">
+            <!-- 화살표를 원의 중앙으로 이동 -->
+            <path
+              d="M10 0L20 10L10 20"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </g>
         </svg>
         <p>좌측으로 이미지를 넘겨서 확인하세요</p>
@@ -27,9 +48,10 @@
 </template>
 
 <script>
-import Swiper from 'swiper';
-import 'swiper/swiper-bundle.css';
+import Swiper from "swiper";
+import "swiper/swiper-bundle.css";
 
+import img1 from "@/assets/images/01.jpg";
 import img2 from "@/assets/images/02.jpg";
 import img3 from "@/assets/images/03.jpg";
 import img4 from "@/assets/images/04.jpg";
@@ -49,8 +71,24 @@ export default {
   name: "photoDefault",
   data() {
     return {
-      imagePath: [img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15],
-      swiper: null
+      imagePath: [
+        img1,
+        img2,
+        img3,
+        img4,
+        img5,
+        img6,
+        img7,
+        img8,
+        img9,
+        img10,
+        img11,
+        img12,
+        img13,
+        img14,
+        img15,
+      ],
+      swiper: null,
     };
   },
   mounted() {
@@ -59,21 +97,21 @@ export default {
   methods: {
     initializeSwiper() {
       this.swiper = new Swiper(this.$refs.swiperContainer, {
-        direction: 'horizontal',
+        direction: "horizontal",
         loop: true,
         slidesPerView: 1,
         spaceBetween: 0,
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
         pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        }
+          el: ".swiper-pagination",
+          clickable: true,
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -97,14 +135,13 @@ export default {
   .image-item {
     width: 100%;
     height: 65vh;
-    object-fit: cover;
+    object-fit: scale-down;
   }
 
   .scroll-instruction {
     text-align: center;
     width: 100%;
     padding: 2.1rem 24px;
-
 
     .scroll-arrow {
       animation: moveLeftRight 1.5s infinite alternate ease-in-out;

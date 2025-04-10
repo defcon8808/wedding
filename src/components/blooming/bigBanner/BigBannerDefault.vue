@@ -1,7 +1,15 @@
 <template>
-  <div class="banner-wrap" :class="{ 'animate-visible': isVisible }" ref="banner">
+  <div
+    class="banner-wrap"
+    :class="{ 'animate-visible': isVisible }"
+    ref="banner"
+  >
     <div class="image-wrap">
-      <img class="content-image" src="../../../assets/images/05.jpg" alt="섹션 이미지" />
+      <img
+        class="content-image"
+        src="../../../assets/images/main.jpg"
+        alt="섹션 이미지"
+      />
     </div>
 
     <div class="content-description">
@@ -11,9 +19,7 @@
         <h2>정혜지</h2>
       </div>
       <div class="description-info text_02">
-        <span class="location">
-          2025년 06월 28일 토요일 오후 3시 00분
-        </span>
+        <span class="location"> 2025년 06월 28일 토요일 오후 3시 00분 </span>
         <p class="animated-underline">DMC타워웨딩 4층 펠리체홀</p>
       </div>
     </div>
@@ -30,23 +36,22 @@ export default {
   },
   mounted() {
     const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            this.isVisible = true;
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.isVisible = true;
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
     );
     observer.observe(this.$refs.banner);
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
-.banner-wrap{
+.banner-wrap {
   border-radius: 4px;
   opacity: 0;
   transform: translateY(30px);
@@ -68,8 +73,16 @@ export default {
       height: 100%;
       object-fit: cover;
       object-position: center;
-      -webkit-mask-image: radial-gradient(ellipse 80% 100% at 50% 0, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
-      mask-image: radial-gradient(ellipse 80% 100% at 50% 0, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+      -webkit-mask-image: radial-gradient(
+        ellipse 80% 100% at 50% 0,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      mask-image: radial-gradient(
+        ellipse 80% 100% at 50% 0,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0) 100%
+      );
     }
   }
 
@@ -79,7 +92,7 @@ export default {
     color: #333;
     text-align: center;
 
-    .description-header{
+    .description-header {
       gap: 9px;
       justify-content: center;
       display: flex;
@@ -89,7 +102,7 @@ export default {
 
     .description-info {
       line-height: 2.4rem;
-      p{
+      p {
         padding-bottom: 4px;
       }
     }

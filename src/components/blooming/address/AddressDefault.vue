@@ -1,34 +1,28 @@
 <template>
   <div
-      class="address-wrap"
-      :class="{ 'animate-visible': isVisible }"
-      ref="address"
+    class="address-wrap"
+    :class="{ 'animate-visible': isVisible }"
+    ref="address"
   >
-
     <div class="address-main-font">
       <p class="big_02">오시는 길</p>
-      <span class="big_02">서울특별시 마포구 성암로 189 <br/>DMC타워웨딩 4층 펠리체홀</span>
+      <span class="big_02"
+        >서울특별시 마포구 성암로 189 <br />DMC타워웨딩 4층 펠리체홀</span
+      >
     </div>
 
     <div class="address-map">
-      <div id="map" ref="map" style="width: 100%; height: 30vh;"></div>
+      <div id="map" ref="map" style="width: 100%; height: 30vh"></div>
     </div>
 
-    <!-- 내비게이션 버튼을 마크업에서 미리 정의 -->
-    <div class="address-nav-wrap">
-      <div class="kakao-wrap">
-        <div class="google-main">
-          <button @pointerdown="startNavigation('google')" class="text_02">구글길안내</button>
-        </div>
-        <div class="kakao-main">
-          <button @pointerdown="startNavigation('kakao')" class="text_02">카카오내비</button>
-        </div>
-      </div>
+    <div class="photo-wrap">
+      <img :src="guideNav" class="image-item" />
     </div>
   </div>
 </template>
 
 <script>
+import guideMap from "@/assets/images/map-inner.jpg";
 
 export default {
   name: "addressDefault",
@@ -39,19 +33,20 @@ export default {
       editedSection: {}, // 수정된 데이터
       map: null, // 카카오맵 객체
       geocoder: null, // Geocoder 객체
-      latitude: '',
-      longitude: '',
+      latitude: "",
+      longitude: "",
+      guideNav: guideMap,
     };
   },
   mounted() {
     const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            this.isVisible = true;
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.3 }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          this.isVisible = true;
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
     );
 
     observer.observe(this.$refs.address);
@@ -63,31 +58,30 @@ export default {
   methods: {
     // 내비게이션 실행
     startNavigation(param) {
-      const lat = this.latitude;  // 목적지 위도
+      const lat = this.latitude; // 목적지 위도
       const lng = this.longitude; // 목적지 경도
-      const name = '서울특별시 마포구 성암로 189 DMC타워웨딩 4층'    // 목적지 이름 (옵션)
+      const name = "서울특별시 마포구 성암로 189 DMC타워웨딩 4층"; // 목적지 이름 (옵션)
 
       if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
-
-        if(param === 'kakao') {
+        if (param === "kakao") {
           // 카카오 SDK가 로드되었는지 확인
-          if (typeof window.Kakao !== 'undefined' && window.Kakao.Navi) {
+          if (typeof window.Kakao !== "undefined" && window.Kakao.Navi) {
             // 카카오 내비게이션 호출
             window.Kakao.Navi.start({
-              name: name,            // 목적지 이름
-              x: lng,                // 경도
-              y: lat,                // 위도
-              coordType: 'wgs84',    // 좌표 시스템 (WGS84)
+              name: name, // 목적지 이름
+              x: lng, // 경도
+              y: lat, // 위도
+              coordType: "wgs84", // 좌표 시스템 (WGS84)
             });
           } else {
-            alert('카카오 내비 SDK가 로드되지 않았습니다.');
+            alert("카카오 내비 SDK가 로드되지 않았습니다.");
           }
         } else {
           const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
           window.location.href = googleMapsUrl;
         }
       } else {
-        alert('모바일 기기에서만 내비게이션을 사용할 수 있습니다.');
+        alert("모바일 기기에서만 내비게이션을 사용할 수 있습니다.");
       }
     },
 
@@ -99,7 +93,7 @@ export default {
       document.head.appendChild(script);
       script.onload = () => {
         kakao.maps.load(() => {
-          const mapContainer = document.getElementById('map'); // 지도를 표시할 div
+          const mapContainer = document.getElementById("map"); // 지도를 표시할 div
           const mapOption = {
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
             level: 6, // 지도의 확대 레벨
@@ -110,29 +104,30 @@ export default {
           // 주소-좌표 변환 객체를 생성합니다
           var geocoder = new kakao.maps.services.Geocoder();
 
-          const param = '서울특별시 마포구 성암로 189'
+          const param = "서울특별시 마포구 성암로 189";
 
           // 주소로 좌표를 검색합니다
-          geocoder.addressSearch(param, function(result, status) {
+          geocoder.addressSearch(
+            param,
+            function (result, status) {
+              // 정상적으로 검색이 완료됐으면
+              if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-            // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
+                this.latitude = coords.getLat(); // 위도
+                this.longitude = coords.getLng(); // 경도
 
-              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                  map: this.map,
+                  position: coords,
+                });
 
-              this.latitude = coords.getLat();  // 위도
-              this.longitude = coords.getLng(); // 경도
-
-              // 결과값으로 받은 위치를 마커로 표시합니다
-              var marker = new kakao.maps.Marker({
-                map: this.map,
-                position: coords
-              });
-
-              // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-              this.map.setCenter(coords);
-            }
-          }.bind(this));
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                this.map.setCenter(coords);
+              }
+            }.bind(this)
+          );
         });
       };
     },
@@ -140,30 +135,41 @@ export default {
 };
 </script>
 <style scoped>
+.photo-wrap {
+  width: 100%;
+  position: relative;
+  margin-bottom: 20px;
+  
+  .image-item {
+    width: 100%;
+    object-fit: scale-down;
+  }
+}
+
 .address-wrap {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 1.5s ease, transform 1.5s ease;
   justify-self: center;
-  padding: 3.2rem 0 0;
+  padding: 1rem 0 0;
   width: 100%;
 
-  .address-main-font{
-    padding: 0 0 2rem;
+  .address-main-font {
+    padding: 0 0 1rem;
     text-align: center;
-    span{
+    span {
       white-space: nowrap;
       text-align: center;
-      line-height: 2.5rem;
+      line-height: 2rem;
     }
 
-    p{
+    p {
       padding-bottom: 26px;
     }
   }
 
   .address-map {
-    #map{
+    #map {
       border: 1px solid #eee;
     }
   }
@@ -181,7 +187,7 @@ export default {
     }
   }
 
-  .address-nav-wrap{
+  .address-nav-wrap {
     color: #555555;
     padding: 2rem 1.6rem 24px;
     position: relative;
@@ -192,7 +198,7 @@ export default {
       }
 
       .google-main,
-      .kakao-main{
+      .kakao-main {
         padding: 0.4rem 16px;
         background-color: #eee;
         border: 1px solid #ddd;
@@ -215,15 +221,14 @@ export default {
           height: 100%;
         }
 
-
         &:hover {
           transform: scale(1.05);
           box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
       }
 
-      .kakao-main{
-        background-color: #fff1f3!important;
+      .kakao-main {
+        background-color: #fff1f3 !important;
       }
     }
   }
