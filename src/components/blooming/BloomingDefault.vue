@@ -1,5 +1,5 @@
 <template>
-  <div class="fullpage-container">
+  <div ref="scrollBlocker" class="fullpage-container">
     <div class="section-wrapper">
       <canvas ref="canvas" class="sakura-canvas"></canvas>
       <section
@@ -48,21 +48,66 @@ export default {
     this.setBodyOverflow();
 
     // 모바일 터치 이벤트
-    window.addEventListener('wheel', this.handleScroll, { passive: false });
-    window.addEventListener('touchstart', this.handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', this.handleTouchMove, { passive: false });
-    window.addEventListener('touchend', this.handleTouchEnd, { passive: false });
+    this.$refs.scrollBlocker.addEventListener(
+      'wheel',
+      this.handleScroll,
+      { passive: false }
+    );
+
+    this.$refs.scrollBlocker.addEventListener(
+      'touchstart',
+      this.handleTouchStart,
+      { passive: false }
+    );
+
+    this.$refs.scrollBlocker.addEventListener(
+      'touchmove',
+      this.handleTouchMove,
+      { passive: false }
+    );
+
+    this.$refs.scrollBlocker.addEventListener(
+      'touchend',
+      this.handleTouchEnd,
+      { passive: false }
+    );
+
+    //window.addEventListener('wheel', this.handleScroll, { passive: false });
+    //window.addEventListener('touchstart', this.handleTouchStart, { passive: false });
+    //window.addEventListener('touchmove', this.handleTouchMove, { passive: false });
+    //window.addEventListener('touchend', this.handleTouchEnd, { passive: false });
   },
 
-  destroyed() {
-    window.removeEventListener('wheel', this.handleScroll);
-    window.removeEventListener('touchstart', this.handleTouchStart);
-    window.removeEventListener('touchmove', this.handleTouchMove);
-    window.removeEventListener('touchend', this.handleTouchEnd);
+  beforeDestroy() {
+    this.$refs.scrollBlocker.removeEventListener(
+      'wheel',
+      this.handleScroll
+    );
+
+    this.$refs.scrollBlocker.removeEventListener(
+      'touchstart',
+      this.handleTouchStart
+    );
+
+    this.$refs.scrollBlocker.removeEventListener(
+      'touchmove',
+      this.handleTouchMove
+    );
+
+    this.$refs.scrollBlocker.removeEventListener(
+      'touchend',
+      this.handleTouchEnd
+    );
+
+    //window.removeEventListener('wheel', this.handleScroll);
+    //window.removeEventListener('touchstart', this.handleTouchStart);
+    //window.removeEventListener('touchmove', this.handleTouchMove);
+    //window.removeEventListener('touchend', this.handleTouchEnd);
   },
 
   methods: {
     handleScroll(event) {
+      console.log('handleScroll')
       if (event.cancelable) {
         event.preventDefault();
       }
@@ -77,6 +122,7 @@ export default {
         event.preventDefault();
       }
       this.touchStartY = event.touches[0].clientY;
+      this.touchEndY = 0;
     },
     handleTouchMove(event) {
       if (event.cancelable) {
@@ -85,9 +131,9 @@ export default {
       this.touchEndY = event.touches[0].clientY;
     },
     handleTouchEnd() {
-      if (this.touchStartY - this.touchEndY > 60 && this.showSection < this.sections.length - 1) {
+      if (this.touchEndY != 0 && this.touchStartY - this.touchEndY > 100 && this.showSection < this.sections.length - 1) {
         this.showSection++;
-      } else if (this.touchEndY - this.touchStartY > 60 && this.showSection > 0) {
+      } else if (this.touchEndY - this.touchStartY > 100 && this.showSection > 0) {
         this.showSection--;
       }
     },
@@ -234,6 +280,12 @@ export default {
   opacity: 0;
   transform: translateY(100%);
   transition: opacity 1.3s ease, transform 1.3s ease;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-overflow-scrolling: auto; /* 또는 touch */
 }
 
 .section *{
